@@ -30,7 +30,30 @@ export const base44 = {
     StileScena: readOnly(stile),
     Risposta: {
       list: async () => { throw new Error('Risposta non esportata: dati privati'); },
-      create: async () => { throw new Error('Invio form non ancora configurato: servizio da approvare. Scrivi a marzola.fra@gmail.com'); },
+      // Invio del form "Sentiamoci" tramite FormSubmit (gratuito, senza account).
+      // Le risposte arrivano via email all'indirizzo in local-Sito.json ("email").
+      // Al PRIMO invio FormSubmit manda a quell'indirizzo una mail di attivazione:
+      // va cliccata una volta, poi gli invii arrivano normalmente.
+      create: async ({ referente, bisogno, email }) => {
+        const to = sito[0]?.email || 'marzola.fra@gmail.com';
+        const res = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(to)}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            'Chi mi ha parlato di te': referente || '-',
+            'Di cosa ho bisogno': bisogno,
+            email,
+            _replyto: email,
+            _subject: 'Nuovo contatto dal sito — Sentiamoci',
+            _template: 'table',
+            _captcha: 'false',
+            _honey: '',
+          }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || String(data.success) !== 'true') throw new Error(data.message || `Invio non riuscito (${res.status})`);
+        return data;
+      },
     },
   },
   auth: {

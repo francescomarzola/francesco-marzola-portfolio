@@ -36,7 +36,7 @@ export default function AccordionProjects({ projects, ordine, altezza = null, ti
               <span className="shrink-0 w-8 text-[12px] sm:text-[13px] tabular-nums text-[#A0A0A0] group-hover:text-white/80 transition-colors">
                 {p.numero}
               </span>
-              <h3 className="shrink min-w-0 font-semibold tracking-[-0.03em] leading-[1.05] text-[length:var(--f-titolo)] text-[color:var(--c-testo)] group-hover:text-white whitespace-nowrap overflow-hidden text-ellipsis transition-colors">
+              <h3 className="shrink min-w-0 font-semibold tracking-[-0.03em] leading-[1.05] text-[length:min(var(--f-titolo),calc((100vw-130px)/9.8))] sm:text-[length:var(--f-titolo)] text-[color:var(--c-testo)] group-hover:text-white break-words sm:whitespace-nowrap sm:overflow-hidden sm:text-ellipsis transition-colors">
                 {p.cliente}
               </h3>
               <Maximize2 className="shrink-0 w-5 h-5 sm:w-6 sm:h-6 text-[color:var(--c-testo)] group-hover:text-white opacity-50 group-hover:opacity-100 transition-all" />

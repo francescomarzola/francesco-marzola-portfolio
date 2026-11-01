@@ -71,7 +71,17 @@ La propagazione DNS può richiedere fino a 24-48 ore; nel frattempo il sito Base
 - Favicon: ora `public/media/Profile.png` (prima era un file ospitato su Base44).
 - URL canonico nei dati strutturati (`index.html`): `https://francescomarzola.it`.
 
-## Da decidere
+## Form "Sentiamoci" (FormSubmit, gratuito)
 
-- **Form "Sentiamoci"**: l'invio automatico non è collegato a nessun servizio. Oggi, se si preme "Invia", compare un messaggio con un link che apre un'email già compilata con le risposte. Per riattivare l'invio automatico va scelto un servizio (es. un form gratuito di terze parti) e collegato in `src/api/base44Client.js` → `Risposta.create`.
-- **Video da ~56 MB** (`public/media/841965…mp4`): funziona, ma è pesante da caricare; conviene comprimerlo.
+Le risposte del form arrivano via email tramite **FormSubmit** (formsubmit.co): gratuito, nessun account.
+Destinatario: il campo `email` di `src/api/local-Sito.json` (oggi `marzola.fra@gmail.com`).
+
+**Attivazione una tantum:** dopo la messa online, compilare il form una volta dal sito.
+FormSubmit manda all'indirizzo destinatario una mail "Activate Form": cliccare il link.
+Da quel momento ogni invio arriva come email (con "Rispondi" diretto al visitatore).
+Se l'invio fallisce, il visitatore vede un messaggio con un link a un'email già compilata: nessun contatto si perde.
+
+## Note
+
+- **Video da ~56 MB** (`public/media/841965…mp4`): funziona, ma è pesante da caricare su mobile; conviene comprimerlo.
+- Il progetto "Antico Forno Roscioli" non ha immagini nei dati esportati (è così anche su Base44).
