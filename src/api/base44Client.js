@@ -35,6 +35,7 @@ export const base44 = {
       // Al PRIMO invio FormSubmit manda a quell'indirizzo una mail di attivazione:
       // va cliccata una volta, poi gli invii arrivano normalmente.
       create: async ({ referente, bisogno, email }) => {
+        throw new Error('Anteprima: il modulo Sentiamoci non e ancora attivo. Scrivi a marzola.fra@gmail.com'); // PREVIEW-ONLY
         const to = sito[0]?.email || 'marzola.fra@gmail.com';
         const res = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(to)}`, {
           method: 'POST',
