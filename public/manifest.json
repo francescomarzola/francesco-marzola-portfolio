@@ -1,0 +1,9 @@
+{
+  "name": "Francesco Marzola — Portfolio",
+  "short_name": "F. Marzola",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#F4F2EE",
+  "theme_color": "#F4F2EE",
+  "icons": [{ "src": "/media/Profile.png", "sizes": "any", "type": "image/png" }]
+}

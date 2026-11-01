@@ -1,3 +1,5 @@
+// Dati locali al posto dell'SDK Base44: il nome del file è mantenuto per non
+// toccare i componenti. Per modificare i testi del sito: src/api/local-*.json
 // Shim indipendente (branch "indipendente"): dati locali al posto dell'API Base44.
 // Solo lettura dati pubblici. Risposta.create fallisce onestamente: il servizio
 // form non e' stato ancora scelto/approvato.

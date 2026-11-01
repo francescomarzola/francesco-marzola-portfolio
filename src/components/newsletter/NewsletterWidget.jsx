@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
 import { Image } from '@/components/ui/image';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import NewsletterCard from '@/components/newsletter/NewsletterCard';
@@ -11,7 +10,8 @@ export default function NewsletterWidget() {
   const { pathname } = useLocation();
   const { data: article } = useQuery({
     queryKey: ['latest-unlikeness', pathname],
-    queryFn: () => base44.functions.invoke('latestUnlikeness', {}).then(({ data }) => data.article || null).catch(() => null),
+    // newsletter.json è generato in build da scripts/fetch-newsletter.mjs (feed RSS Substack)
+    queryFn: () => fetch(`${import.meta.env.BASE_URL}newsletter.json`, { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null)).then((d) => d?.article || null).catch(() => null),
     staleTime: 3600000,
     gcTime: 3600000,
     retry: false,
