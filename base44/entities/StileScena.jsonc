@@ -1,0 +1,136 @@
+{
+  "name": "StileScena",
+  "type": "object",
+  "properties": {
+    "tipo": {
+      "type": "string",
+      "enum": [
+        "intro",
+        "narrazione",
+        "narrativa_lunga",
+        "progetto",
+        "check",
+        "contatto",
+        "parole"
+      ],
+      "description": "Tipo di scena a cui applicare questo stile (un record per tipo)"
+    },
+    "sfondo": {
+      "type": "string",
+      "description": "Colore di sfondo (hex). Vuoto = default basato su tema"
+    },
+    "testo": {
+      "type": "string",
+      "description": "Colore testo principale (hex). Vuoto = default"
+    },
+    "accento": {
+      "type": "string",
+      "description": "Colore accento/badge (hex). Vuoto = default"
+    },
+    "testo_secondario": {
+      "type": "string",
+      "description": "Colore testo secondario/liste (hex). Vuoto = default"
+    },
+    "sottotitolo": {
+      "type": "string",
+      "description": "Colore del sottotitolo/subhead (hex). Vuoto = default"
+    },
+    "dim_titolo": {
+      "type": "string",
+      "description": "Grandezza font titolo (es. clamp(3.4rem,12vw,7rem)). Vuoto = default"
+    },
+    "dim_sottotitolo": {
+      "type": "string",
+      "description": "Grandezza font sottotitolo. Vuoto = default"
+    },
+    "dim_lista": {
+      "type": "string",
+      "description": "Grandezza font lista. Vuoto = default"
+    },
+    "dim_numero": {
+      "type": "string",
+      "description": "Grandezza font numero/badge. Vuoto = default"
+    },
+    "dim_cliente": {
+      "type": "string",
+      "description": "Grandezza font cliente. Vuoto = default"
+    },
+    "dim_contesto": {
+      "type": "string",
+      "description": "Grandezza font contesto. Vuoto = default"
+    },
+    "dim_parole": {
+      "type": "string",
+      "description": "Grandezza font parole marquee. Vuoto = default"
+    },
+    "sfondo_mobile": {
+      "type": "string",
+      "description": "Override mobile sfondo (vuoto = eredita desktop)"
+    },
+    "testo_mobile": {
+      "type": "string",
+      "description": "Override mobile testo (vuoto = eredita desktop)"
+    },
+    "accento_mobile": {
+      "type": "string",
+      "description": "Override mobile accento (vuoto = eredita desktop)"
+    },
+    "testo_secondario_mobile": {
+      "type": "string",
+      "description": "Override mobile testo secondario (vuoto = eredita desktop)"
+    },
+    "sottotitolo_mobile": {
+      "type": "string",
+      "description": "Override mobile colore sottotitolo (vuoto = eredita desktop)"
+    },
+    "dim_titolo_mobile": {
+      "type": "string",
+      "description": "Override mobile dim. titolo (vuoto = eredita desktop)"
+    },
+    "dim_sottotitolo_mobile": {
+      "type": "string",
+      "description": "Override mobile dim. sottotitolo (vuoto = eredita desktop)"
+    },
+    "dim_lista_mobile": {
+      "type": "string",
+      "description": "Override mobile dim. lista (vuoto = eredita desktop)"
+    },
+    "dim_numero_mobile": {
+      "type": "string",
+      "description": "Override mobile dim. numero (vuoto = eredita desktop)"
+    },
+    "dim_cliente_mobile": {
+      "type": "string",
+      "description": "Override mobile dim. cliente (vuoto = eredita desktop)"
+    },
+    "dim_contesto_mobile": {
+      "type": "string",
+      "description": "Override mobile dim. contesto (vuoto = eredita desktop)"
+    },
+    "dim_parole_mobile": {
+      "type": "string",
+      "description": "Override mobile dim. parole (vuoto = eredita desktop)"
+    }
+  },
+  "required": [
+    "tipo"
+  ],
+  "rls": {
+    "read": {},
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

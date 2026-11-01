@@ -1,0 +1,205 @@
+{
+  "name": "Scena",
+  "type": "object",
+  "properties": {
+    "ordine": {
+      "type": "number",
+      "description": "Ordine di visualizzazione della scena (1..N)"
+    },
+    "tipo": {
+      "type": "string",
+      "enum": [
+        "intro",
+        "narrazione",
+        "narrativa_lunga",
+        "progetto",
+        "check",
+        "contatto",
+        "parole"
+      ],
+      "description": "Tipo di scena: intro (hero), narrazione, narrativa lunga (titolo a met\u00e0 grandezza), progetto, check, contatto, parole (marquee)"
+    },
+    "tema": {
+      "type": "string",
+      "enum": [
+        "chiaro",
+        "arancione",
+        "scuro"
+      ],
+      "default": "chiaro",
+      "description": "Schema colore della scena"
+    },
+    "appiccicata": {
+      "type": "boolean",
+      "default": false,
+      "description": "Se la scena resta pinnata in cima per un beat di scroll"
+    },
+    "visibile": {
+      "type": "boolean",
+      "default": true,
+      "description": "Se la scena \u00e8 visibile sul sito pubblico"
+    },
+    "altezza_schermo": {
+      "type": "number",
+      "description": "Altezza della sezione in % dello schermo (100 = tutto schermo, 50 = met\u00e0). Vuoto = comportamento predefinito",
+      "default": null
+    },
+    "titolo": {
+      "type": "string",
+      "description": "Titolo principale (usa ' / ' per andare a capo)"
+    },
+    "sottotitolo": {
+      "type": "string",
+      "description": "Testo secondario"
+    },
+    "sottotitolo_colore": {
+      "type": "string",
+      "description": "Colore del sottotitolo (hex dalla palette consentita). Vuoto = eredita il default del tipo di scena"
+    },
+    "lista": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Elenco di voci (narrazione) o parole del marquee (tipo 'parole', una per riga)"
+    },
+    "opacita": {
+      "type": "number",
+      "description": "Opacit\u00e0 del marquee parole (0-100, solo tipo 'parole')",
+      "default": 100
+    },
+    "parliamone_cta": {
+      "type": "boolean",
+      "default": false,
+      "description": "Se mostrare il pulsante Parliamone (apre il contatto come modale) - solo tipo 'narrazione'"
+    },
+    "numero": {
+      "type": "string",
+      "description": "Etichetta numero progetto (es. 01)"
+    },
+    "cliente": {
+      "type": "string",
+      "description": "Nome cliente del progetto"
+    },
+    "contesto": {
+      "type": "string",
+      "description": "Descrizione/contesto del progetto"
+    },
+    "immagini": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "URL immagini slider del progetto"
+    },
+    "youtube_id": {
+      "type": "string",
+      "description": "ID video YouTube del progetto"
+    },
+    "video_url": {
+      "type": "string",
+      "description": "URL file video mp4 del progetto"
+    },
+    "link_url": {
+      "type": "string",
+      "description": "URL link esterno (scena check)"
+    },
+    "link_etichetta": {
+      "type": "string",
+      "description": "Etichetta link esterno (scena check)"
+    },
+    "extra_class": {
+      "type": "string",
+      "description": "Classi Tailwind extra per la sezione (es. pb-28)"
+    },
+    "titolo_mobile": {
+      "type": "string",
+      "description": "Override mobile del titolo (vuoto = eredita da desktop)"
+    },
+    "sottotitolo_mobile": {
+      "type": "string",
+      "description": "Override mobile del sottotitolo (vuoto = eredita da desktop)"
+    },
+    "sottotitolo_colore_mobile": {
+      "type": "string",
+      "description": "Override mobile colore sottotitolo (vuoto = eredita da desktop)"
+    },
+    "lista_mobile": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Override mobile della lista/parole (vuoto = eredita da desktop)"
+    },
+    "opacita_mobile": {
+      "type": "number",
+      "description": "Override mobile opacit\u00e0 marquee (vuoto = eredita da desktop)"
+    },
+    "numero_mobile": {
+      "type": "string",
+      "description": "Override mobile numero progetto (vuoto = eredita da desktop)"
+    },
+    "cliente_mobile": {
+      "type": "string",
+      "description": "Override mobile cliente (vuoto = eredita da desktop)"
+    },
+    "contesto_mobile": {
+      "type": "string",
+      "description": "Override mobile contesto (vuoto = eredita da desktop)"
+    },
+    "immagini_mobile": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Override mobile immagini slider (vuoto = eredita da desktop)"
+    },
+    "youtube_id_mobile": {
+      "type": "string",
+      "description": "Override mobile YouTube ID (vuoto = eredita da desktop)"
+    },
+    "video_url_mobile": {
+      "type": "string",
+      "description": "Override mobile URL video mp4 (vuoto = eredita da desktop)"
+    },
+    "link_url_mobile": {
+      "type": "string",
+      "description": "Override mobile URL link (vuoto = eredita da desktop)"
+    },
+    "link_etichetta_mobile": {
+      "type": "string",
+      "description": "Override mobile etichetta link (vuoto = eredita da desktop)"
+    },
+    "extra_class_mobile": {
+      "type": "string",
+      "description": "Override mobile classi extra (vuoto = eredita da desktop)"
+    },
+    "altezza_schermo_mobile": {
+      "type": "number",
+      "description": "Override mobile altezza sezione in % schermo (vuoto = eredita da desktop)",
+      "default": null
+    }
+  },
+  "required": [
+    "ordine",
+    "tipo"
+  ],
+  "rls": {
+    "read": {},
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

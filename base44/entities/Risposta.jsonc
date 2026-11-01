@@ -1,0 +1,28 @@
+{
+  "name": "Risposta",
+  "type": "object",
+  "properties": {
+    "referente": {
+      "type": "string",
+      "description": "Chi ha segnalato Francesco"
+    },
+    "bisogno": {
+      "type": "string",
+      "description": "Di cosa il visitatore ha bisogno"
+    },
+    "email": {
+      "type": "string",
+      "description": "Email di contatto del visitatore"
+    },
+    "data": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Data e ora dell'invio"
+    }
+  },
+  "required": [
+    "referente",
+    "bisogno",
+    "email"
+  ]
+}
