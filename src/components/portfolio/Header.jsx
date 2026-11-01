@@ -38,9 +38,9 @@ export default function Header() {
                 <span className="text-[clamp(12px,3.8vw,14px)] sm:text-[12px] font-medium text-white">FM</span>
               )}
             </span>
-            <span className="text-[clamp(14px,4.6vw,17px)] sm:text-[14px] font-semibold text-[#111111] truncate">{nome}</span>
+            <span className="text-[clamp(13px,3.9vw,17px)] sm:text-[14px] font-semibold text-[#111111] whitespace-nowrap shrink-0">{nome}</span>
             {ruolo && (
-              <span className="inline-block text-[clamp(12px,4vw,15px)] sm:text-[12px] font-medium text-white bg-[#1A1E29] rounded-full px-[clamp(0.6rem,2.2vw,0.8rem)] sm:px-2.5 py-[clamp(0.25rem,0.9vw,0.3rem)] sm:py-1 whitespace-nowrap">
+              <span className="inline-block text-[clamp(10px,2.9vw,15px)] sm:text-[12px] font-medium text-white bg-[#1A1E29] rounded-full px-[clamp(0.6rem,2.2vw,0.8rem)] sm:px-2.5 py-[clamp(0.25rem,0.9vw,0.3rem)] sm:py-1 whitespace-nowrap">
                 {ruolo}
               </span>
             )}

@@ -14,6 +14,7 @@ export default function ContactForm({ tone = 'orange' }) {
   const [email, setEmail] = useState('');
   const [sending, setSending] = useState(false);
   const [done, setDone] = useState(false);
+  const [failed, setFailed] = useState(false);
   const [contactEmail, setContactEmail] = useState(DEFAULT_EMAIL);
   const textareaRef = useRef(null);
   const isMobile = useIsMobile();
@@ -49,7 +50,10 @@ export default function ContactForm({ tone = 'orange' }) {
       });
       setDone(true);
     } catch (err) {
+      // Versione standalone: l'invio automatico non è ancora collegato a un servizio.
+      // Fallback: messaggio visibile + email precompilata con le risposte.
       console.error(err);
+      setFailed(true);
     } finally {
       setSending(false);
     }
@@ -62,6 +66,10 @@ export default function ContactForm({ tone = 'orange' }) {
       </h3>
     );
   }
+
+  const mailtoHref = `mailto:${contactEmail}?subject=${encodeURIComponent('Parliamone')}&body=${encodeURIComponent(
+    `Chi mi ha parlato di te: ${referente.trim() || '-'}\n\nDi cosa ho bisogno:\n${bisogno.trim()}\n\nLa mia email: ${email.trim()}`
+  )}`;
 
   const ink = light ? '#111111' : '#F4F2EE';
   const labelCls = light ? 'text-[#6F6C66]' : 'text-[#F4F2EE]/80';
@@ -120,6 +128,13 @@ export default function ContactForm({ tone = 'orange' }) {
           className={`${inputBase} ${inputColor} ${ringCls} text-[16px]`}
         />
       </div>
+
+      {failed && (
+        <p role="alert" className={`text-[15px] leading-[1.6] max-w-[52ch] ${light ? 'text-[#111111]' : 'text-[#F4F2EE]'}`}>
+          L'invio automatico non è disponibile in questo momento.{' '}
+          <a href={mailtoHref} className="underline font-medium">Mandami queste risposte via email</a>.
+        </p>
+      )}
 
       <div className="pt-2">
         <button
