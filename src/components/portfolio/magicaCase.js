@@ -1,7 +1,7 @@
 // Kept with the page release so this case goes live only when the site is published.
 const magicaCase = {
   id: 'magica-plus-05',
-  visibile: false,
+  visibile: true, // allineato alla versione pubblicata live (migrazione = sito attuale)
   tipo: 'progetto',
   numero: '05',
   cliente: 'Magica+',
