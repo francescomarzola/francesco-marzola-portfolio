@@ -1,8 +1,9 @@
-export default async function latestUnlikeness() {
+// Funzione Vercel: legge il feed RSS di The Unlikeness e restituisce l'ultimo articolo.
+export async function GET() {
   // Public, fixed-source RSS lookup: no user data, credentials or caller URLs.
   const key = '__latestUnlikenessFeed';
   const now = Date.now();
-  const reply = (article) => Response.json({ article });
+  const reply = (article) => Response.json({ article }, { headers: { 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400' } });
   try {
     const cached = globalThis[key];
     if (cached && cached.expires > now) return reply(cached.article);

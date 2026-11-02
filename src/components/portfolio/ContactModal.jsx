@@ -1,7 +1,7 @@
 // Contact form rendered inside a dialog (modal) — light theme.
 import { useEffect, useState } from 'react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { base44 } from '@/api/base44Client';
+import { content } from '@/api/content';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { resolveSito } from '@/lib/mobileOverride';
 import ContactForm from './ContactForm';
@@ -11,7 +11,7 @@ export default function ContactModal({ open, onOpenChange }) {
   const isMobile = useIsMobile();
 
   useEffect(() => {
-    base44.entities.Sito.list('created_date', 10)
+    content.list('Sito')
       .then((rows) => {
         const s = resolveSito(rows[0], isMobile);
         if (s?.modal_titolo) setTitolo(s.modal_titolo);

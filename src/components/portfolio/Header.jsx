@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
-import { base44 } from '@/api/base44Client';
+import { content } from '@/api/content';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { resolveSito } from '@/lib/mobileOverride';
 import { Image } from '@/components/ui/image';
@@ -14,7 +14,7 @@ export default function Header() {
   const isMobile = useIsMobile();
 
   useEffect(() => {
-    base44.entities.Sito.list('created_date', 10)
+    content.list('Sito')
       .then((rows) => setSito(rows[0] || null))
       .catch(() => setSito(null));
   }, []);

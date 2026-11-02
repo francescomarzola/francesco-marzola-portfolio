@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { base44 } from '@/api/base44Client';
+import { content } from '@/api/content';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { resolveSito } from '@/lib/mobileOverride';
 import RevealTitle from './RevealTitle';
@@ -14,12 +14,13 @@ export default function ContactForm({ tone = 'orange' }) {
   const [email, setEmail] = useState('');
   const [sending, setSending] = useState(false);
   const [done, setDone] = useState(false);
+  const [failed, setFailed] = useState(false);
   const [contactEmail, setContactEmail] = useState(DEFAULT_EMAIL);
   const textareaRef = useRef(null);
   const isMobile = useIsMobile();
 
   useEffect(() => {
-    base44.entities.Sito.list('created_date', 10)
+    content.list('Sito')
       .then((rows) => {
         const s = resolveSito(rows[0], isMobile);
         if (s?.email) setContactEmail(s.email);
@@ -40,16 +41,28 @@ export default function ContactForm({ tone = 'orange' }) {
     e.preventDefault();
     if (!canSend || sending) return;
     setSending(true);
+    setFailed(false);
     try {
-      await base44.entities.Risposta.create({
-        referente: referente.trim(),
-        bisogno: bisogno.trim(),
-        email: email.trim(),
-        data: new Date().toISOString()
+      // Invio via FormSubmit: la richiesta arriva per email all'indirizzo del sito.
+      const res = await fetch(`https://formsubmit.co/ajax/${contactEmail}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          _subject: 'Nuovo contatto da francescomarzola.it',
+          _template: 'table',
+          _captcha: 'false',
+          _replyto: email.trim(),
+          'Chi ti ha parlato di me': referente.trim(),
+          'Di cosa hai bisogno': bisogno.trim(),
+          Email: email.trim(),
+        }),
       });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok || json.success === 'false' || json.success === false) throw new Error(json.message || 'Invio non riuscito');
       setDone(true);
     } catch (err) {
       console.error(err);
+      setFailed(true);
     } finally {
       setSending(false);
     }
@@ -133,6 +146,11 @@ export default function ContactForm({ tone = 'orange' }) {
             <span className="absolute left-0 -bottom-0.5 h-px w-0 transition-all duration-300 group-hover:w-full" style={{ background: ink }} />
           </span>
         </button>
+        {failed && (
+          <p role="alert" className="mt-4 text-[15px]" style={{ color: ink }}>
+            Qualcosa non è andato. Scrivimi direttamente all'indirizzo qui sotto.
+          </p>
+        )}
       </div>
 
       <p className={`text-[15px] leading-[1.6] max-w-[52ch] ${light ? 'text-[#6F6C66]' : 'text-[#F4F2EE]/80'}`}>

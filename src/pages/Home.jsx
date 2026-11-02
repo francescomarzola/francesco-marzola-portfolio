@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { base44 } from '@/api/base44Client';
+import { content } from '@/api/content';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { resolveScena } from '@/lib/mobileOverride';
 import { resolveStyle } from '@/lib/styleResolver';
@@ -18,17 +18,17 @@ export default function Home() {
   const isMobile = useIsMobile();
 
   useEffect(() => {
-    base44.entities.Scena.list('ordine', 100)
+    content.list('Scena')
       .then(setScene)
       .catch(() => setScene([]));
-    base44.entities.StileScena.list('created_date', 50)
+    content.list('StileScena')
       .then((rows) => {
         const map = {};
         rows.forEach((r) => { map[r.tipo] = r; });
         setStili(map);
       })
       .catch(() => setStili({}));
-    base44.entities.Sito.list('created_date', 10)
+    content.list('Sito')
       .then((rows) => setSito(rows[0] || null))
       .catch(() => setSito(null));
   }, []);
