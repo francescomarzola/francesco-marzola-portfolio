@@ -6,7 +6,7 @@ import ContactScene from './ContactScene';
 import WordsMarquee from './WordsMarquee';
 import RevealTitle from './RevealTitle';
 import InlineLinks from './InlineLinks';
-import SubtleBackground from './SubtleBackground';
+import HeroShader from './HeroShader';
 import { styleVars } from '@/lib/styleResolver';
 
 const titleCls = 'font-semibold tracking-[-0.035em] leading-[1.0] text-[length:var(--f-titolo)] max-w-[16ch] text-left';
@@ -29,7 +29,7 @@ export default function SceneRenderer({ scena, style }) {
         style={{ ...vars, height: altezza_schermo != null ? `${altezza_schermo}svh` : '100svh' }}
         data-scene={ordine}
       >
-        <SubtleBackground />
+        <HeroShader />
         <div className="relative">
           <RevealTitle as="h1" text={titolo} className={titleCls} />
           {sottotitolo && <p className={subCls}><InlineLinks text={sottotitolo} /></p>}
