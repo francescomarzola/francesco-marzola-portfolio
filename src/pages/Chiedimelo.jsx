@@ -7,10 +7,10 @@ import { ArrowRight, ArrowUp, X } from 'lucide-react';
 import RevealTitle from '@/components/portfolio/RevealTitle';
 import HeroShader from '@/components/portfolio/HeroShader';
 
-// Le richieste arrivano direttamente all'email personale (FormSubmit: alla prima richiesta
-// manda a questo indirizzo un'email di attivazione da confermare una volta sola).
+// Alias FormSubmit già attivato (lo stesso del form contatti del sito).
+const FORMSUBMIT_ID = '2fb7effbd6f6697b94d45d3f793d4a3e';
 const CONTACT_EMAIL = 'marzola.fra@gmail.com';
-const SEND_TIMEOUT = 15000;
+const SEND_TIMEOUT = 20000;
 const FOTO = '/media/profilo.webp';
 const OPEN_DELAY = 2300; // ms: titolo, poi saluto, poi si apre la chat
 
@@ -120,7 +120,7 @@ function ChatPanel({ onClose }) {
     try {
       const ctrl = new AbortController();
       const timer = setTimeout(() => ctrl.abort(), SEND_TIMEOUT);
-      const res = await fetch(`https://formsubmit.co/ajax/${CONTACT_EMAIL}`, {
+      const res = await fetch(`https://formsubmit.co/ajax/${FORMSUBMIT_ID}`, {
         method: 'POST',
         signal: ctrl.signal,
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },

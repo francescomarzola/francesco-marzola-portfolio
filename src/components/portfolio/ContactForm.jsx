@@ -5,8 +5,8 @@ import { resolveSito } from '@/lib/mobileOverride';
 import RevealTitle from './RevealTitle';
 
 const DEFAULT_EMAIL = 'marzola.fra@gmail.com';
-// FormSubmit verso l'email personale (alla prima richiesta arriva un'email di attivazione da confermare).
-const FORMSUBMIT_TO = 'marzola.fra@gmail.com';
+// Alias FormSubmit (già attivato): inoltra le richieste all'email personale.
+const FORMSUBMIT_ID = '2fb7effbd6f6697b94d45d3f793d4a3e';
 
 // tone: 'orange' (default, for the orange contact scene) or 'light' (for the modal).
 export default function ContactForm({ tone = 'orange' }) {
@@ -46,7 +46,8 @@ export default function ContactForm({ tone = 'orange' }) {
     setFailed(false);
     try {
       // Invio via FormSubmit: la richiesta arriva per email all'indirizzo del sito.
-      const res = await fetch(`https://formsubmit.co/ajax/${FORMSUBMIT_TO}`, {
+      const res = await fetch(`https://formsubmit.co/ajax/${FORMSUBMIT_ID}`, {
+        signal: AbortSignal.timeout ? AbortSignal.timeout(20000) : undefined,
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
