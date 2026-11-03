@@ -152,3 +152,52 @@ html {
     background-color: #F4F2EE;
   }
 }
+/* Landing /chiedimelo: entrata chat e messaggi */
+@keyframes chatIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes msgIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .chat-in { animation: chatIn 420ms cubic-bezier(.2,.8,.2,1) both; }
+  .msg-in { animation: msgIn 260ms ease-out both; }
+}
+
+/* Landing /chiedimelo: manina che esce da dietro la foto, saluta e rientra */
+.wave-hand { opacity: 0; transform: translate(26px, -50%) scale(0.4); transform-origin: 70% 90%; }
+@keyframes handWave {
+  0%   { opacity: 0; transform: translate(26px, -50%) scale(0.4) rotate(-30deg); }
+  12%  { opacity: 1; transform: translate(0, -50%) scale(1.08) rotate(0deg); }
+  20%  { transform: translate(0, -50%) scale(1) rotate(18deg); }
+  30%  { transform: translate(0, -50%) scale(1) rotate(-10deg); }
+  40%  { transform: translate(0, -50%) scale(1) rotate(18deg); }
+  50%  { transform: translate(0, -50%) scale(1) rotate(-10deg); }
+  60%  { transform: translate(0, -50%) scale(1) rotate(18deg); }
+  70%  { transform: translate(0, -50%) scale(1) rotate(0deg); }
+  84%  { opacity: 1; transform: translate(0, -50%) scale(1) rotate(0deg); }
+  100% { opacity: 0; transform: translate(26px, -50%) scale(0.4) rotate(-20deg); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .wave-hand { animation: handWave 1.9s cubic-bezier(.3,.7,.3,1) 0.5s both; }
+}
+
+/* Landing /chiedimelo: manina che sale dal basso e indica "Scopri chi sono" */
+.idle-hand { opacity: 0; transform: translateY(90px); transition: transform 520ms cubic-bezier(.2,.9,.25,1.25), opacity 200ms; }
+.idle-hand[data-hint="point"], .idle-hand[data-hint="like"] { opacity: 1; transform: translateY(0); }
+.idle-hand[data-hint="gone"] { opacity: 0; transform: translateY(90px); transition: transform 420ms ease-in, opacity 420ms ease-in; }
+@keyframes handPoint { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(8px); } }
+@keyframes handLike {
+  0% { transform: scale(0.5) rotate(-25deg); }
+  55% { transform: scale(1.3) rotate(8deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .idle-hand[data-hint="point"] .idle-hand-inner { animation: handPoint 560ms ease-in-out 500ms 2; }
+  .idle-hand[data-hint="like"] .idle-hand-inner { animation: handLike 480ms cubic-bezier(.3,1.6,.5,1) both; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .idle-hand { transition: opacity 200ms; transform: none !important; }
+}
