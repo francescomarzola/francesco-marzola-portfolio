@@ -7,7 +7,10 @@ import { ArrowRight, ArrowUp, X } from 'lucide-react';
 import RevealTitle from '@/components/portfolio/RevealTitle';
 import HeroShader from '@/components/portfolio/HeroShader';
 
-const FORMSUBMIT_ID = '2fb7effbd6f6697b94d45d3f793d4a3e';
+// Le richieste arrivano direttamente all'email personale (FormSubmit: alla prima richiesta
+// manda a questo indirizzo un'email di attivazione da confermare una volta sola).
+const CONTACT_EMAIL = 'marzola.fra@gmail.com';
+const SEND_TIMEOUT = 15000;
 const FOTO = '/media/profilo.webp';
 const OPEN_DELAY = 2300; // ms: titolo, poi saluto, poi si apre la chat
 
@@ -115,8 +118,11 @@ function ChatPanel({ onClose }) {
     setStatus('sending');
     setTyping(true);
     try {
-      const res = await fetch(`https://formsubmit.co/ajax/${FORMSUBMIT_ID}`, {
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), SEND_TIMEOUT);
+      const res = await fetch(`https://formsubmit.co/ajax/${CONTACT_EMAIL}`, {
         method: 'POST',
+        signal: ctrl.signal,
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
           _subject: 'Domanda da "Chiedimelo" (ChatGPT Ads) — francescomarzola.it',
@@ -130,6 +136,7 @@ function ChatPanel({ onClose }) {
           ...readUtm(),
         }),
       });
+      clearTimeout(timer);
       const json = await res.json().catch(() => ({}));
       if (!res.ok || json.success === 'false' || json.success === false) throw new Error(json.message || 'Invio non riuscito');
       setTyping(false);
@@ -237,17 +244,22 @@ function ChatPanel({ onClose }) {
           </div>
         )}
         {status === 'failed' && (
-          <p role="alert" className="text-[14px] leading-[1.5] text-[#111111] pt-2">
-            Qualcosa non è andato. Scrivimi direttamente a{' '}
-            <a href="mailto:marzola.fra@gmail.com" className="underline underline-offset-4 hover:text-[#F26522]">
-              marzola.fra@gmail.com
-            </a>
-            .
-          </p>
+          <div className="msg-in flex">
+            <p role="alert" className="max-w-[85%] bg-white rounded-2xl rounded-bl-md px-4 py-2.5 text-[15px] leading-[1.45] shadow-[0_1px_2px_rgba(0,0,0,0.06)]">
+              Non sono riuscito a riceverla da qui.{' '}
+              <a
+                href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('La mia domanda')}&body=${encodeURIComponent(`${answers.domanda || ''}\n\nSito: ${answers.sito || '—'}`)}`}
+                className="underline underline-offset-4 font-semibold hover:text-[#F26522]"
+              >
+                Mandamela per email
+              </a>
+              , è già scritta.
+            </p>
+          </div>
         )}
       </div>
 
-      {status !== 'done' && (
+      {status !== 'done' && status !== 'failed' && (
         <div className="px-4 pb-4 pt-2">
           {current?.skip && (
             <button
@@ -388,20 +400,22 @@ export default function Chiedimelo() {
       </div>
 
       {/* Titolo */}
-      <section className="relative z-10 h-full flex flex-col justify-start sm:justify-center px-6 sm:p-[5%] pt-[4.75rem] sm:pt-[5%]">
+      <section className="relative z-10 h-full flex flex-col justify-start sm:justify-center px-6 sm:px-[5%] pt-[5.75rem] sm:pt-28 sm:pb-16">
         <RevealTitle
           as="h1"
           text="Hai chiesto / a ChatGPT. / Ora chiedilo / a me."
-          className="font-semibold tracking-[-0.035em] leading-[1.0] text-[clamp(2.5rem,10.5vw,7rem)] max-w-[16ch] text-left"
+          className="font-semibold tracking-[-0.035em] leading-[1.0] text-[clamp(2rem,min(10.5vw,7.6svh),7rem)] sm:text-[clamp(3rem,min(11vw,13svh),7rem)] max-w-[16ch] text-left"
         />
         <p className="hidden sm:block text-[clamp(1.05rem,2.6vw,1.6rem)] leading-[1.4] font-semibold mt-10 max-w-[32ch] sm:max-w-[40ch]">
           Piacere, sono Francesco. Mi occupo di branding strategico da vent'anni.
         </p>
-        {!open && (
+        {(
           <button
             type="button"
             onClick={openChat}
-            className="group mt-8 self-start inline-flex items-center gap-2.5 rounded-full bg-[#111111] border border-white/60 pl-5 pr-2 py-2 text-white text-[15px] font-semibold shadow-[0_2px_12px_-4px_rgba(0,0,0,0.28)] hover:bg-black transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#111111] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F26522]"
+            tabIndex={open ? -1 : 0}
+            aria-hidden={open}
+            className={`${open ? 'invisible' : ''} group mt-8 self-start inline-flex items-center gap-2.5 rounded-full bg-[#111111] border border-white/60 pl-5 pr-2 py-2 text-white text-[15px] font-semibold shadow-[0_2px_12px_-4px_rgba(0,0,0,0.28)] hover:bg-black transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#111111] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F26522]`}
           >
             Chiedimelo
             <span className="w-7 h-7 rounded-full bg-white flex items-center justify-center transition-transform group-hover:translate-x-0.5">
