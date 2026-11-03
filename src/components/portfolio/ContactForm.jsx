@@ -3,10 +3,9 @@ import { content } from '@/api/content';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { resolveSito } from '@/lib/mobileOverride';
 import RevealTitle from './RevealTitle';
+import { sendContact } from '@/lib/sendContact';
 
 const DEFAULT_EMAIL = 'marzola.fra@gmail.com';
-// Alias FormSubmit (già attivato): inoltra le richieste all'email personale.
-const FORMSUBMIT_ID = '2fb7effbd6f6697b94d45d3f793d4a3e';
 
 // tone: 'orange' (default, for the orange contact scene) or 'light' (for the modal).
 export default function ContactForm({ tone = 'orange' }) {
@@ -45,23 +44,15 @@ export default function ContactForm({ tone = 'orange' }) {
     setSending(true);
     setFailed(false);
     try {
-      // Invio via FormSubmit: la richiesta arriva per email all'indirizzo del sito.
-      const res = await fetch(`https://formsubmit.co/ajax/${FORMSUBMIT_ID}`, {
-        signal: AbortSignal.timeout ? AbortSignal.timeout(20000) : undefined,
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-          _subject: 'Nuovo contatto da francescomarzola.it',
-          _template: 'table',
-          _captcha: 'false',
-          _replyto: email.trim(),
+      await sendContact({
+        subject: 'Nuovo contatto da francescomarzola.it',
+        replyTo: email.trim(),
+        fields: {
           'Chi ti ha parlato di me': referente.trim(),
           'Di cosa hai bisogno': bisogno.trim(),
           Email: email.trim(),
-        }),
+        },
       });
-      const json = await res.json().catch(() => ({}));
-      if (!res.ok || json.success === 'false' || json.success === false) throw new Error(json.message || 'Invio non riuscito');
       setDone(true);
     } catch (err) {
       console.error(err);
