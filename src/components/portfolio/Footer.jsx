@@ -10,6 +10,12 @@ const FOOTER_DEFAULT = '© 2026 Francesco Marzola';
 const linkCls =
   'hover:text-[#F26522] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F26522] focus-visible:ring-offset-2 focus-visible:ring-offset-[#111111] rounded-sm';
 
+// Link interni a pagine singole (es. /chi-sono): colore molto saturo.
+const pageLinkCls =
+  'text-[#FF3D00] font-semibold hover:text-[#ff6a3d] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3D00] focus-visible:ring-offset-2 focus-visible:ring-offset-[#111111] rounded-sm';
+
+const isInternal = (url) => typeof url === 'string' && url.startsWith('/');
+
 export default function Footer() {
   const [sito, setSito] = useState(null);
   const isMobile = useIsMobile();
@@ -37,7 +43,7 @@ export default function Footer() {
             href={l.url}
             target={/^https?:\/\//.test(l.url) ? '_blank' : undefined}
             rel={/^https?:\/\//.test(l.url) ? 'noopener noreferrer' : undefined}
-            className={linkCls}
+            className={isInternal(l.url) ? pageLinkCls : linkCls}
           >
             {l.etichetta}
           </a>
