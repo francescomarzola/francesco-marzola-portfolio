@@ -33,7 +33,7 @@ export default function Footer() {
   const extra = Array.isArray(s?.footer_link) ? s.footer_link.filter((l) => l && l.etichetta && l.url) : [];
 
   return (
-    <footer className="snap-start py-8 px-6 sm:px-10 lg:px-16 text-[13px] text-[#F4F2EE]/80 bg-[#111111] flex flex-wrap gap-x-6 gap-y-2 justify-between">
+    <footer className="snap-start pt-8 pb-28 sm:py-8 px-6 sm:px-10 lg:px-16 text-[13px] text-[#F4F2EE]/80 bg-[#111111] flex flex-wrap gap-x-6 gap-y-2 justify-between">
       <span>{footerTesto}</span>
       <div className="flex flex-wrap gap-x-6 gap-y-2 items-center">
         <a href={linkedin} target="_blank" rel="noopener noreferrer" className={linkCls}>LinkedIn</a>

@@ -129,6 +129,34 @@ html {
   scroll-snap-align: start;
   scroll-snap-stop: always;
 }
+
+/* Mobile: la Home tiene una scena per schermo (snap nativo, 100svh). L'ultima
+   scena e il footer stanno in un'unica pagina a 100svh, così i link del footer
+   restano visibili e cliccabili sopra il bottone CTA fisso. */
+@media (max-width: 767px) {
+  .mobile-last-page {
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+  .mobile-last-page > .scene-slot {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .mobile-last-page .scene-slot > [data-scene] {
+    min-height: 0 !important;
+    height: 100%;
+    scroll-snap-align: none;
+  }
+  .mobile-last-page > footer {
+    flex: 0 0 auto;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   [style*="marqueeRTL"] { animation: none !important; }
