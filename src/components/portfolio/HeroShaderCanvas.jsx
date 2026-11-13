@@ -14,9 +14,12 @@ export const WATER_PRESETS = {
     ripples: { intensity: 8, decay: 6, radius: 0.5 },
   },
   mossa: {
-    opacity: 0.85,
-    swirl: { colorA: '#EE5C18', colorB: '#F78A55', detail: 1.6, speed: 0.6 },
-    wake: '#D9500F',
+    opacity: 1,
+    swirl: { colorA: '#F26522', colorB: '#E5561A', detail: 1.6, speed: 0.6, colorSpace: 'oklch' },
+    // Multiplied over the water: white = no change, warm tint = slightly deeper orange (never grey).
+    wake: '#FFCFB3',
+    wakeBase: '#FFFFFF',
+    wakeBlend: 'multiply',
     wakeMomentum: 14,
     wakeRadius: 3.8,
     ripples: { intensity: 16, decay: 4, radius: 0.7 },
@@ -28,20 +31,21 @@ export default function HeroShaderCanvas({ preset = 'mossa' }) {
   return (
     <div aria-hidden className="absolute inset-0 pointer-events-none" style={{ opacity: p.opacity }}>
       <div className="w-full h-full animate-[heroShaderIn_1.6s_ease-out_both]">
-        <Shader className="w-full h-full">
+        <Shader className="w-full h-full" colorSpace="srgb">
           <Swirl {...p.swirl} />
           <ChromaFlow
-            baseColor="#F26522"
+            baseColor={p.wakeBase || '#F26522'}
             upColor={p.wake}
             downColor={p.wake}
             leftColor={p.wake}
             rightColor={p.wake}
             momentum={p.wakeMomentum}
             radius={p.wakeRadius}
-            opacity={0.6}
+            blendMode={p.wakeBlend || 'normal'}
+            opacity={p.wakeBlend ? 1 : 0.6}
           />
           <CursorRipples {...p.ripples} chromaticSplit={0} edges="mirror" />
-          <FilmGrain strength={0.04} />
+          <FilmGrain strength={0.03} />
         </Shader>
       </div>
       <style>{`@keyframes heroShaderIn { from { opacity: 0 } to { opacity: 1 } }`}</style>
