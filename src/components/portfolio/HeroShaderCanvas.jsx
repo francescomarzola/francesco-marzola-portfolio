@@ -1,7 +1,7 @@
 // The actual WebGPU shader stack. Loaded on demand by HeroShader only when WebGPU is available,
 // because the shader library is heavy (~700 KB gzip).
 // "Mare arancione": a slow tone-on-tone liquid surface on #F26522, no fluted lines.
-// Moving the cursor drags a soft wake and sends ripples through the water, like a hand in it.
+// Moving the cursor drags a slightly darker wake and sends ripples through the water, like a hand in it.
 import { Shader, Swirl, ChromaFlow, CursorRipples, FilmGrain } from 'shaders/react';
 
 export const WATER_PRESETS = {
@@ -16,15 +16,15 @@ export const WATER_PRESETS = {
   mossa: {
     opacity: 0.85,
     swirl: { colorA: '#EE5C18', colorB: '#F78A55', detail: 1.6, speed: 0.6 },
-    wake: '#F9A57C',
+    wake: '#D9500F',
     wakeMomentum: 14,
     wakeRadius: 3.8,
     ripples: { intensity: 16, decay: 4, radius: 0.7 },
   },
 };
 
-export default function HeroShaderCanvas({ preset = 'calma' }) {
-  const p = WATER_PRESETS[preset] || WATER_PRESETS.calma;
+export default function HeroShaderCanvas({ preset = 'mossa' }) {
+  const p = WATER_PRESETS[preset] || WATER_PRESETS.mossa;
   return (
     <div aria-hidden className="absolute inset-0 pointer-events-none" style={{ opacity: p.opacity }}>
       <div className="w-full h-full animate-[heroShaderIn_1.6s_ease-out_both]">
