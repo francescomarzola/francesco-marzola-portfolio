@@ -95,10 +95,10 @@ export default function Home() {
   }
   const count = items.length;
 
-  // Su mobile l'ultima scena e il footer vivono in un'unica pagina a 100svh,
-  // così i link del footer restano raggiungibili e cliccabili (sopra il CTA fisso).
+  // L'ultima scena e il footer vivono in un'unica pagina a 100svh (desktop e
+  // mobile), così i link del footer restano sempre visibili e cliccabili.
   const hasItems = Array.isArray(items) && items.length > 0;
-  const groupFooter = isMobile && hasItems;
+  const groupFooter = hasItems;
 
   return (
     <div className="bg-[#F4F2EE] text-[#111111] min-h-screen w-full">
@@ -106,7 +106,7 @@ export default function Home() {
       <Hud count={count} />
       {visible ? (groupFooter ? items.slice(0, -1) : items) : null}
       {groupFooter ? (
-        <div className="mobile-last-page">
+        <div className="last-page">
           <div className="scene-slot">{items[items.length - 1]}</div>
           <Footer />
         </div>
